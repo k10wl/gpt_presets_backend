@@ -1,0 +1,15 @@
+FROM golang:1.21rc2
+
+WORKDIR /gpt_presets_backend
+
+RUN go install github.com/cosmtrek/air@latest
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY . ./
+
+EXPOSE 8080
+
+CMD ["air", "-c", ".air.toml"]
