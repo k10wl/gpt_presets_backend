@@ -8,8 +8,8 @@ import (
 )
 
 func HealthCheck(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK,
-		models.BaseResponse{
+	c.JSON(http.StatusOK,
+		models.MessageResponse{
 			Message: "OK",
 		},
 	)

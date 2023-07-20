@@ -15,12 +15,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	database.Init()
-	defer database.Disconnect()
+	db := database.Connect()
+	defer database.Disconnect(db)
 
 	r := gin.Default()
 
-	api_v1.Routes(r)
+	api_v1.Routes(r, db)
 
 	r.Run()
 }

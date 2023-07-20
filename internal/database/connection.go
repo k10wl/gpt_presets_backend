@@ -1,6 +1,13 @@
 package database
 
+
+
+
+
+
+
 import (
+	"gpt_presets_backend/internal/models"
 	"log"
 	"os"
 	"sync"
@@ -14,7 +21,7 @@ var (
 	once sync.Once
 )
 
-func Init() (*gorm.DB, error) {
+func Connect() *gorm.DB {
 	var err error
 
 	once.Do(func() {
@@ -27,14 +34,12 @@ func Init() (*gorm.DB, error) {
 		log.Fatal("Failed to initialize database connection")
 	}
 
-	return db, err
+	db.AutoMigrate(models.User{}, models.Tokens{})
+
+	return db
 }
 
-func Disconnect() {
-	if db == nil {
-		log.Fatal("Database not initialized")
-	}
-
+func Disconnect(db *gorm.DB) {
 	dbConnection, err := db.DB()
 	if err == nil {
 		dbConnection.Close()

@@ -1,6 +1,6 @@
 FROM golang:1.21rc2
 
-WORKDIR /gpt_presets_backend
+WORKDIR /app
 
 RUN go install github.com/cosmtrek/air@latest
 
