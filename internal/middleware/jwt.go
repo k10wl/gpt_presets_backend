@@ -5,7 +5,6 @@ import (
 	"gpt_presets_backend/internal/models"
 	"gpt_presets_backend/internal/utils/token"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -25,7 +24,8 @@ func JwtAuthMiddleware(r *handlers.UserHandler) gin.HandlerFunc {
 			return
 		}
 
-		payload, err := token.ParseUserToken(bearer[len(BEARER_SCHEMA):], os.Getenv("JWT_USER_SIGNATURE"))
+		authToken := bearer[len(BEARER_SCHEMA):]
+		payload, err := token.ParseUserToken(authToken, token.AUTH_SIGNATURE)
 
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, models.MessageResponse{
@@ -35,10 +35,11 @@ func JwtAuthMiddleware(r *handlers.UserHandler) gin.HandlerFunc {
 			return
 		}
 
-		user, err := r.UserRepository.FindUserByID(payload.PublicUser.ID)
+		user, err := r.UserRepository.FindUserTokensByID(payload.PublicUser.ID)
 
-		if err != nil {
+		if err != nil || user.Tokens.AuthToken != authToken {
 			c.JSON(http.StatusUnauthorized, models.MessageResponse{
+
 				Message: "Unauthorized",
 			})
 			c.Abort()

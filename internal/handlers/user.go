@@ -7,7 +7,6 @@ import (
 	"gpt_presets_backend/internal/utils/password"
 	"gpt_presets_backend/internal/utils/token"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -138,7 +137,7 @@ func (h *UserHandler) RefreshTokens(c *gin.Context) {
 		return
 	}
 
-	claim, err := token.ParseUserToken(body.RefreshToken, os.Getenv("JWT_USER_SIGNATURE"))
+	claim, err := token.ParseUserToken(body.RefreshToken, token.REFRESH_SIGNATURE)
 
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, models.MessageResponse{
