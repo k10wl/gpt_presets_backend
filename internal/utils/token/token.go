@@ -1,9 +1,10 @@
 package token
 
 import (
-	"gpt_presets_backend/internal/models"
 	"os"
 	"time"
+
+	"gpt_presets_backend/internal/models"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -56,9 +57,13 @@ func CreateAccessTokens(payload models.PublicUser) (t models.Tokens, err error) 
 }
 
 func ParseUserToken(tokenString string, signature string) (data *JWTPublicUserClaim, err error) {
-	token, err := jwt.ParseWithClaims(tokenString, &JWTPublicUserClaim{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(signature), nil
-	})
+	token, err := jwt.ParseWithClaims(
+		tokenString,
+		&JWTPublicUserClaim{},
+		func(t *jwt.Token) (interface{}, error) {
+			return []byte(signature), nil
+		},
+	)
 
 	claims, ok := token.Claims.(*JWTPublicUserClaim)
 	if !ok || !token.Valid {

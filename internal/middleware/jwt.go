@@ -1,11 +1,12 @@
 package middleware
 
 import (
+	"net/http"
+	"strings"
+
 	"gpt_presets_backend/internal/handlers"
 	"gpt_presets_backend/internal/models"
 	"gpt_presets_backend/internal/utils/token"
-	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +27,6 @@ func JwtAuthMiddleware(r *handlers.UserHandler) gin.HandlerFunc {
 
 		authToken := bearer[len(BEARER_SCHEMA):]
 		payload, err := token.ParseUserToken(authToken, token.AUTH_SIGNATURE)
-
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, models.MessageResponse{
 				Message: "Unauthorized",
@@ -39,7 +39,6 @@ func JwtAuthMiddleware(r *handlers.UserHandler) gin.HandlerFunc {
 
 		if err != nil || user.Tokens.AuthToken != authToken {
 			c.JSON(http.StatusUnauthorized, models.MessageResponse{
-
 				Message: "Unauthorized",
 			})
 			c.Abort()

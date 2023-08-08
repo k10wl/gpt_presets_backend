@@ -2,11 +2,12 @@ package handlers
 
 import (
 	"fmt"
+	"net/http"
+
 	"gpt_presets_backend/internal/models"
 	"gpt_presets_backend/internal/repository"
 	"gpt_presets_backend/internal/utils/password"
 	"gpt_presets_backend/internal/utils/token"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -39,7 +40,6 @@ func (h *UserHandler) SignUp(c *gin.Context) {
 	}
 
 	tokens, err := token.CreateAccessTokens(user.PublicInfo())
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.MessageResponse{
 			Message: "Access tokens creation failed",
@@ -47,10 +47,13 @@ func (h *UserHandler) SignUp(c *gin.Context) {
 		return
 	}
 
-	user.Tokens = models.Tokens{UserID: user.ID, AuthToken: tokens.AuthToken, RefreshToken: tokens.RefreshToken}
+	user.Tokens = models.Tokens{
+		UserID:       user.ID,
+		AuthToken:    tokens.AuthToken,
+		RefreshToken: tokens.RefreshToken,
+	}
 
 	record, err := h.UserRepository.CreateUser(&user)
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
 			Message: "Database error",
@@ -81,7 +84,6 @@ func (h *UserHandler) SignIn(c *gin.Context) {
 	}
 
 	record, err := h.UserRepository.FindUserByName(user.Name)
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
 			Message: "Database error",
@@ -99,7 +101,6 @@ func (h *UserHandler) SignIn(c *gin.Context) {
 	}
 
 	tokens, err := token.CreateAccessTokens(record.PublicInfo())
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.MessageResponse{
 			Message: "Access tokens creation failed",
@@ -138,7 +139,6 @@ func (h *UserHandler) RefreshTokens(c *gin.Context) {
 	}
 
 	claim, err := token.ParseUserToken(body.RefreshToken, token.REFRESH_SIGNATURE)
-
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, models.MessageResponse{
 			Message: "Bad token",
@@ -147,7 +147,6 @@ func (h *UserHandler) RefreshTokens(c *gin.Context) {
 	}
 
 	userWithTokens, err := h.UserRepository.FindUserTokensByID(claim.PublicUser.ID)
-
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, models.MessageResponse{
 			Message: "Bad token",
@@ -164,7 +163,6 @@ func (h *UserHandler) RefreshTokens(c *gin.Context) {
 	}
 
 	tokens, err := token.CreateAccessTokens(claim.PublicUser)
-
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, models.MessageResponse{
 			Message: "Bad token",

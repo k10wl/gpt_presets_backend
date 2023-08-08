@@ -1,16 +1,11 @@
 package database
 
-
-
-
-
-
-
 import (
-	"gpt_presets_backend/internal/models"
 	"log"
 	"os"
 	"sync"
+
+	"gpt_presets_backend/internal/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

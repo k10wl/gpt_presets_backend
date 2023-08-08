@@ -1,8 +1,9 @@
 package models
 
 import (
-	"gpt_presets_backend/internal/utils/password"
 	"time"
+
+	"gpt_presets_backend/internal/utils/password"
 
 	"gorm.io/gorm"
 )
@@ -11,8 +12,8 @@ type User struct {
 	gorm.Model
 
 	ID        uint       `json:"id"`
-	Name      string     `gorm:"type:varchar(255);uniqueIndex" json:"name,omitempty" binding:"required"`
-	Password  string     `json:"password,omitempty" binding:"required"`
+	Name      string     `json:"name,omitempty"     gorm:"type:varchar(255);uniqueIndex" binding:"required"`
+	Password  string     `json:"password,omitempty"                                      binding:"required"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
@@ -37,13 +38,12 @@ type UserResponse struct {
 }
 
 type LoginUser struct {
-	Name     string `json:"name,omitempty" binding:"required"`
+	Name     string `json:"name,omitempty"     binding:"required"`
 	Password string `json:"password,omitempty" binding:"required"`
 }
 
 func (u *User) BeforeCreate(db *gorm.DB) (err error) {
 	password, err := password.HashPassword(u.Password)
-
 	if err != nil {
 		return err
 	}
@@ -58,5 +58,4 @@ func (u *User) PublicInfo() PublicUser {
 		ID:   u.ID,
 		Name: u.Name,
 	}
-
 }

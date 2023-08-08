@@ -1,11 +1,12 @@
 package token
 
 import (
-	"gpt_presets_backend/internal/models"
 	"os"
 	"reflect"
 	"testing"
 	"time"
+
+	"gpt_presets_backend/internal/models"
 )
 
 func TestGenerateAndParseTOken(t *testing.T) {
@@ -21,19 +22,21 @@ func TestGenerateAndParseTOken(t *testing.T) {
 	exp := time.Now().Add(time.Hour)
 
 	token, err := GenerateUserToken(testUser, exp, signature)
-
 	if err != nil {
 		t.Errorf("Failed to generate token: %v\n:", err)
 	}
 
 	parsedUser, err := ParseUserToken(token, signature)
-
 	if err != nil {
 		t.Errorf("Failed to parse token: %v\n:", err)
 	}
 
 	if !reflect.DeepEqual(testUser, parsedUser.PublicUser) {
-		t.Errorf("Test user and parsed user are not equal\nTest user: %v\nParsed used: %v", testUser, parsedUser.PublicUser)
+		t.Errorf(
+			"Test user and parsed user are not equal\nTest user: %v\nParsed used: %v",
+			testUser,
+			parsedUser.PublicUser,
+		)
 	}
 }
 
@@ -47,7 +50,6 @@ func TestTokenExpiration(t *testing.T) {
 	exp := time.Now().Add(-time.Hour)
 
 	token, err := GenerateUserToken(testUser, exp, signature)
-
 	if err != nil {
 		t.Errorf("Failed to generate token: %v\n:", err)
 	}

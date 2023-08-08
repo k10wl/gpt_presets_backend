@@ -1,9 +1,10 @@
 package main
 
 import (
+	"log"
+
 	api_v1 "gpt_presets_backend/internal/api/v1"
 	"gpt_presets_backend/internal/database"
-	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"

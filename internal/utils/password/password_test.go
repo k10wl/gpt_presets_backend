@@ -11,7 +11,7 @@ func TestValidatePassword(t *testing.T) {
 		valid bool
 	}
 
-	var testCases = []TestTable{
+	testCases := []TestTable{
 		{
 			name:  "return nil for valid password",
 			input: "Qwerty123",
@@ -61,7 +61,6 @@ func TestEncryption(t *testing.T) {
 	pass := "password"
 
 	hash, err := HashPassword(pass)
-
 	if err != nil {
 		t.Errorf("An unexpected error occurred: %v", err)
 	}
