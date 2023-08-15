@@ -4,7 +4,7 @@ import (
 	"os"
 	"time"
 
-	"gpt_presets_backend/internal/models"
+	"gpt_presets_backend/internal/app/models"
 
 	"github.com/golang-jwt/jwt/v5"
 )

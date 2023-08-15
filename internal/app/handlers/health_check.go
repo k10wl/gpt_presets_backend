@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"gpt_presets_backend/internal/models"
+	"gpt_presets_backend/internal/app/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

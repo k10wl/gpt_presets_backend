@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"gpt_presets_backend/internal/utils/password"
+	"gpt_presets_backend/internal/app/utils/password"
 
 	"gorm.io/gorm"
 )

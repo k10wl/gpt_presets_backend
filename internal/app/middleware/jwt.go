@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"strings"
 
-	"gpt_presets_backend/internal/handlers"
-	"gpt_presets_backend/internal/models"
-	"gpt_presets_backend/internal/utils/token"
+	"gpt_presets_backend/internal/app/handlers"
+	"gpt_presets_backend/internal/app/models"
+	"gpt_presets_backend/internal/app/utils/token"
 
 	"github.com/gin-gonic/gin"
 )

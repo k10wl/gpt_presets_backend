@@ -3,11 +3,12 @@ package main
 import (
 	"log"
 
-	api_v1 "gpt_presets_backend/internal/api/v1"
-	"gpt_presets_backend/internal/database"
+	api_v1 "gpt_presets_backend/internal/app/api/v1"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	"gpt_presets_backend/internal/app/database"
 )
 
 func main() {
@@ -16,10 +17,10 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	r := gin.Default()
+
 	db := database.Connect()
 	defer database.Disconnect(db)
-
-	r := gin.Default()
 
 	api_v1.Routes(r, db)
 

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"gpt_presets_backend/internal/models"
-	"gpt_presets_backend/internal/repository"
-	"gpt_presets_backend/internal/utils/password"
-	"gpt_presets_backend/internal/utils/token"
+	"gpt_presets_backend/internal/app/models"
+	"gpt_presets_backend/internal/app/repository"
+	"gpt_presets_backend/internal/app/utils/password"
+	"gpt_presets_backend/internal/app/utils/token"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,9 +22,9 @@ type UserWithTokens struct {
 	PublicUser   models.PublicUser `json:"user"`
 }
 
-func NewUserHandler(r repository.UserRepository) *UserHandler {
+func NewUserHandler(r *repository.UserRepository) *UserHandler {
 	return &UserHandler{
-		UserRepository: r,
+		UserRepository: *r,
 	}
 }
 

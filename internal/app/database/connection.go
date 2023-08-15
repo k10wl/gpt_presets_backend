@@ -5,7 +5,7 @@ import (
 	"os"
 	"sync"
 
-	"gpt_presets_backend/internal/models"
+	"gpt_presets_backend/internal/app/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -29,7 +29,12 @@ func Connect() *gorm.DB {
 		log.Fatal("Failed to initialize database connection")
 	}
 
-	db.AutoMigrate(models.User{}, models.Tokens{})
+	db.AutoMigrate(
+		models.User{},
+		models.Tokens{},
+		models.Chat{},
+		models.ChatContent{},
+	)
 
 	return db
 }

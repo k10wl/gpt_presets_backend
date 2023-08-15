@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"gpt_presets_backend/internal/models"
+	"gpt_presets_backend/internal/app/models"
 
 	"gorm.io/gorm"
 )
