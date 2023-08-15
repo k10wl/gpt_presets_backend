@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"gpt_presets_backend/internal/utils/password"
+	"gpt_presets_backend/internal/app/utils/password"
 
 	"gorm.io/gorm"
 )
@@ -19,13 +19,6 @@ type User struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 
 	Tokens Tokens
-}
-
-type Tokens struct {
-	gorm.Model
-	AuthToken    string
-	RefreshToken string
-	UserID       uint
 }
 
 type PublicUser struct {

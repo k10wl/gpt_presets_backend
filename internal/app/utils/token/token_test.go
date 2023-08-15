@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"gpt_presets_backend/internal/models"
+	"gpt_presets_backend/internal/app/models"
 )
 
 func TestGenerateAndParseTOken(t *testing.T) {

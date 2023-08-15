@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"gpt_presets_backend/internal/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +8,7 @@ import (
 
 func HealthCheck(c *gin.Context) {
 	c.JSON(http.StatusOK,
-		models.MessageResponse{
+		Response{
 			Message: "OK",
 		},
 	)
